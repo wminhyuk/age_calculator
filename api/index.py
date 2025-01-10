@@ -39,7 +39,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     "🐕 Dog",      # 술 - 개
     "🐖 Pig"       # 해 - 돼지
     ]
-    zodiac = zodiac_animals[birth_date.year % 12]
+    zodiac = zodiac_animals[(birth_date.year-4) % 12]
 
 
     return {
