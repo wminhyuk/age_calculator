@@ -24,10 +24,28 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     if (birth_date.month > today.month) or (birth_date.month == today.month and birth_date.day > today.day):
         age -= 1
 
+    # 띠 리스트
+    zodiac_animals = [
+    "🐀 Rat",      # 자 - 쥐
+    "🐂 Ox",       # 축 - 소
+    "🐅 Tiger",    # 인 - 호랑이
+    "🐇 Rabbit",   # 묘 - 토끼
+    "🐉 Dragon",   # 진 - 용
+    "🐍 Snake",    # 사 - 뱀
+    "🐎 Horse",    # 오 - 말
+    "🐐 Goat",     # 미 - 양
+    "🐒 Monkey",   # 신 - 원숭이
+    "🐓 Rooster",  # 유 - 닭
+    "🐕 Dog",      # 술 - 개
+    "🐖 Pig"       # 해 - 돼지
+    ]
+    zodiac = zodiac_animals[(birth_date.year-4) % 12]
+
 
     return {
             "birthday": birthday,
             "age": str(age),
             "basedate": str(today),
+            "zodiac": zodiac,
             "message": "Age calculated successfully!"
             }
