@@ -42,6 +42,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     ]
     zodiac = zodiac_animals[(birth_date.year-4) % 12]
 
+
     #한국식나이계산
 
     kage = kac.how_korean_age(year_of_birth=birth_date.year)
