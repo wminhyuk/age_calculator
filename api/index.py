@@ -41,6 +41,13 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     ]
     zodiac = zodiac_animals[(birth_date.year-4) % 12]
 
+# 발표자 선정 랜덤 뽑기
+# app.get()
+#def PickPresenter():
+    #names = ["강현룡", "권오준", "배형균", "백지원", "서민혁", "안재영", "전희진", "조민규", "조성근"]
+    #Presenter = random.choice(names)
+
+
 
     return {
             "birthday": birthday,
