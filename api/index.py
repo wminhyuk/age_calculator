@@ -3,6 +3,7 @@ from datetime import datetime, date
 from typing import Dict
 import random
 import korean_age_calculator as kac
+import sys
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
