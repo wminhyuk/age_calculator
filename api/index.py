@@ -44,14 +44,15 @@ def age_calculator(birthday: str) -> Dict[str, str]:
 
     #한국식나이계산
 
-    kage = kac.how_korean_age(birth_date.year)
+    kage = kac.how_korean_age(year_of_birth=birth_date.year)
 
 
     return {
             "birthday": birthday,
             "age": str(age) + "한국 나이:" + str(kage),
             "kage": str(kage),
-            "basedate": str(today),
+            "speaker": "홍길동",
+            "basedate": str(today)
             "zodiac": zodiac,
             "message": "Age calculated successfully!"
             }
