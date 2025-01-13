@@ -40,6 +40,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     "🐖 Pig"       # 해 - 돼지
     ]
     zodiac = zodiac_animals[(birth_date.year-4) % 12]
+    os_name = get_os_pretty_name()
 
 
     return {
@@ -48,7 +49,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
             "basedate": str(today),
             "zodiac": zodiac,
             "message": "Age calculated successfully!",
-            "os-name": get_os_pretty_name()
+            "os-name": os_name,
             }
 def get_os_pretty_name():
     with open('/etc/os-release', 'r') as f:
