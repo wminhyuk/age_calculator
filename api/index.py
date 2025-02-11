@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from datetime import datetime, date
 from typing import Dict
-import random
+import os
+import psycopg
+from dotenv import load_dotenv
+from psycopg.rows import dict_row
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
@@ -56,5 +59,31 @@ def get_os_pretty_name():
         for line in f:
             if line.startswith('PRETTY_NAME='):
                 return line.split('=')[1].replace('\n', '').strip('"')
-            return None
+    return None
 
+load_dotenv()
+
+DB_CONFIG = {
+    "user": os.getenv("DB_USERNAME"),
+    "dbname": os.getenv("DB_NAME"),
+    "password": os.getenv("DB_PASSWORD"),
+    "host": os.getenv("DB_HOST"),
+    "port": os.getenv("DB_PORT")
+}
+
+@app.get("/api/py/select_all")
+def select_all():
+    query = """
+    SELECT
+        l.menu_name,
+        m.name,
+        l.dt
+    FROM
+        lunch_menu l
+        inner join member m
+        on l.member_id = m.id
+    """
+    with psycopg.connect(**DB_CONFIG, row_factory=dict_row) as conn:
+        cur = conn.execute(query)
+        rows = cur.fetchall()
+        return rows
