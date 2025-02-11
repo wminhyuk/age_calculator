@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from datetime import datetime, date
 from typing import Dict
-import random
+import os
+import psycopg
+from dotenv import load_dotenv
+from psycopg.rows import dict_row
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
@@ -47,7 +50,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
             "age": str(age),
             "basedate": str(today),
             "zodiac": zodiac,
-            "message": "Age calculated successfully!"
+            "message": "Age calculated successfully!",
             "os-name": "PRETTY_NAME"
             }
 
@@ -56,5 +59,31 @@ def get_os_pretty_name():
         for line in f:
             if line.startswith('PRETTY_NAME='):
                 return line.split('=')[1].replace('\n', '').strip('"')
-            return None
+    return None
 
+load_dotenv()
+
+#DB_CONFIG = {
+#    "user": os.getenv("DB_USERNAME"),
+#    "dbname": os.getenv("DB_NAME"),
+#    "password": os.getenv("DB_PASSWORD"),
+#    "host": os.getenv("DB_HOST"),
+#    "port": os.getenv("DB_PORT")
+#}
+
+DB_CONFIG = {
+    "user": os.getenv("POSTGRES_USER"),
+    "dbname": os.getenv("POSTGRES_DATABASE"),
+    "password": os.getenv("POSTGRES_PASSWORD"),
+    "host": os.getenv("POSTGRES_HOST"),
+    "port": os.getenv("DB_PORT", "5432")
+}
+
+
+@app.get("/api/py/select_all")
+def select_all():
+    with psycopg.connect(**DB_CONFIG, row_factory=dict_row) as conn:
+        cur = conn.execute("select * from view_select_all")
+        rows = cur.fetchall()
+        return rows
+    
