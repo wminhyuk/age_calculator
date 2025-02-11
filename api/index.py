@@ -63,13 +63,22 @@ def get_os_pretty_name():
 
 load_dotenv()
 
+#DB_CONFIG = {
+#    "user": os.getenv("DB_USERNAME"),
+#    "dbname": os.getenv("DB_NAME"),
+#    "password": os.getenv("DB_PASSWORD"),
+#    "host": os.getenv("DB_HOST"),
+#    "port": os.getenv("DB_PORT")
+#}
+
 DB_CONFIG = {
-    "user": os.getenv("DB_USERNAME"),
-    "dbname": os.getenv("DB_NAME"),
-    "password": os.getenv("DB_PASSWORD"),
-    "host": os.getenv("DB_HOST"),
-    "port": os.getenv("DB_PORT")
+    "user": os.getenv("POSTGRES_USER"),
+    "dbname": os.getenv("POSTGRES_DATABASE"),
+    "password": os.getenv("POSTGRES_PASSWORD"),
+    "host": os.getenv("POSTGRES_HOST"),
+    "port": os.getenv("DB_PORT", "5432")
 }
+
 
 @app.get("/api/py/select_all")
 def select_all():
@@ -77,3 +86,4 @@ def select_all():
         cur = conn.execute("select * from view_select_all")
         rows = cur.fetchall()
         return rows
+    
